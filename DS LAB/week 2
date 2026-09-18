@@ -1,0 +1,99 @@
+import pandas as pd
+import numpy as np
+df=pd.DataFrame({'Age': [25,30,np.nan,40,35],'Department': ['HR','Finance','Finance',np.nan,'IT']})
+print(df)
+#mean for numeric
+df['Age']=df['Age'].fillna(df['Age'].mean())
+#mode for categorial
+df['Department'] = df['Department'].fillna(df['Department'].mode()[0])
+print("\nAfter Filling Missing Values:")
+print(df)
+
+#forward fill(use previous value)
+#python
+import pandas as pd
+import numpy as np
+df=pd.DataFrame({
+    'Age':[25,30,np.nan,40,35],
+    'Department':['HR','Finance','Finance',np.nan,'IT']
+})
+#Display Original Dataset
+print("Original Dataset(with Missing Values):")
+print(df)
+df_ffill=df.copy()
+df_ffill.ffill(inplace=True)
+print(df_ffill)
+
+#backward fill(use previous value)
+#python
+import pandas as pd
+import numpy as np
+df=pd.DataFrame({
+    'Age':[25,30,np.nan,40,35],
+    'Department':['HR','Finance','Finance',np.nan,'IT']
+})
+#Display Original Dataset
+print("Original Dataset(with Missing Values):")
+print(df)
+df_bfill=df.copy()
+df_bfill.bfill(inplace=True)
+print(df_bfill)
+
+#Drop rows with missing values
+import pandas as pd
+import numpy as np
+df=pd.DataFrame({
+    "Age":[25,30,np.nan,40,35],
+    "Department":["HR","Finance",np.nan,"Finance","IT"]
+})
+#Display Original Dataset
+print("Original Datset")
+print(df)
+
+#Drop rowss with missing values
+df_drop_rows=df.dropna()
+print("After dropping rows:\n",df_drop_rows)
+
+#Drop columns with missing values
+df_drop_cols=df.dropna(axis=1)
+print("After dropping columns:\n",df_drop_cols)
+
+#Removing Duplicates
+import pandas as pd
+import numpy as np
+#sample dataset with duplicates
+df=pd.DataFrame({
+    'ID':[1,2,2,3,4,4],
+    'Name':['Alice','Bob','Bob','Charlie','David','David'],
+    'Age':[25,30,30,35,40,40]
+})
+print("Original Data:\n",df)
+#Remove exact duplicates
+df_exact=df.drop_duplicates()
+print("\nAfter Excact Match Removal:\n",df_exact)
+
+#Subset -Based Removal
+#remove duplicates based on selected key columns(e.g,Id or name)
+#remove duplicates based only on'ID
+import pandas as pd
+#sample dataset with duplicates
+df=pd.DataFrame({
+    'ID':[1,2,2,3,4,4],
+    'Name':['Alice','Bob','Bob','Charlie','David','David','David'],
+    'Age':[25,30,30,35,40,40]
+})
+print("Original Data:\n",df)
+#remove duplicates based only on id
+df_subset_id = df.drop_duplicates(subset=['ID'])
+print("\nAfter Subset-Based Removal (ID):\n", df_subset_id)
+df_subset_name = df.drop_duplicates(subset=['Name'])
+print("\nAfter Subset-Based Removal (Name):\n", df_subset_name)
+
+#correcting Inconsistent Formats
+import pandas as pd
+#sample dataset with inconsistent data formats
+df=pd.DataFrame({
+    'Data':['2025-02-05','05/01/2025','jan 5,2025','2025.01.05']
+})
+print("Original Data:\n",df)
+#convert all dates to standard ISO format(yyyy-mm-dd)

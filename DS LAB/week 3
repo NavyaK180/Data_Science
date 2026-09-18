@@ -1,0 +1,140 @@
+import numpy as np
+from scipy.spatial import distance
+pointA=np.array([2, 4, 6])
+pointB=np.array([5, 1, 9])   
+#Euclidean distance
+euclidean_dist=distance.euclidean(pointA,pointB)
+print("Euclidean Distance:",euclidean_dist)
+#similarity(inverse of distance)
+similarity_euclidean=1/(1+euclidean_dist)
+print("Euclidean Similarity:",similarity_euclidean)
+#Manhattan's distance
+pointA=np.array([1, 2, 3, 4])
+pointB=np.array([5, 6, 7 ,8])
+manhattan_dist=distance.cityblock(pointA,pointB)
+print("Manhattan Distance:",manhattan_dist)
+#similarity(inverse of distance)
+similarity_manhattan=1/(1+manhattan_dist) 
+print("Manhattan Similarity:",similarity_manhattan)
+#Minkowski Distance with p=3
+minkowski_dist_p3=distance.minkowski(pointA,pointB, p=3)
+print("Minkowski Distance (p=3):",minkowski_dist_p3)
+#similarity(inverse of distance)  
+similarity_minkowski=1/(1+minkowski_dist_p3)
+print("Minkowski Similarity (p=3):",similarity_minkowski)
+minkowski_dist_p3=distance.minkowski(pointA,pointB, p=3)
+# if p=1 it is equal to manhattan's distance&similarity, if p=3 it is equal to eculidean's distance&similarity
+minkowski_dist_p1=distance.minkowski(pointA,pointB, p=1)
+print("Minkowski Distance (p=1):",minkowski_dist_p1)
+similarity_minkowski=1/(1+minkowski_dist_p1)
+print("Minkowski Similarity (p=1):",similarity_minkowski)
+#euclidean
+euclidean_dist=distance.euclidean(pointA,pointB)
+print("Euclidean Distance:",euclidean_dist)
+similarity_euclidean=1/(1+euclidean_dist)
+print("Euclidean Similarity:",similarity_euclidean)
+#if p=2
+minkowski_dist_p2=distance.minkowski(pointA,pointB, p=2)
+print("Minkowski Distance (p=2):",minkowski_dist_p2)
+similarity_minkowski=1/(1+minkowski_dist_p2)
+print("Minkowski Similarity (p=2):",similarity_minkowski)
+
+#pearson correlation
+import pandas as pd
+#example dataset
+df=pd.DataFrame({
+    'X':[10,20,30,40,50],
+    'Y':[12,24,33,45,60]
+})
+#pearson correlation matrix
+corr_matrix=df.corr(method='pearson')
+print("Pearson Correlation Matrix:\n",corr_matrix)
+#question: take 3 subjects marks of 5 students and find the correlation matrix
+import pandas as pd
+# Marks of 5 students in 3 subjects
+df = pd.DataFrame({
+    'DS': [80, 70, 90, 60, 75],
+    'QC': [85, 72, 88, 65, 78],
+    'TOc': [82, 75, 91, 62, 80]
+})
+# Calculate Pearson correlation matrix
+corr_matrix = df.corr(method='pearson')
+print("Pearson Correlation Matrix:\n",corr_matrix)
+#calculate from dataset 
+import pandas as pd
+df=pd.read_csv("Iris.csv")
+print(df.corr(method='pearson',numeric_only=float))
+
+import pandas as pd
+from scipy.stats import spearmanr
+#Example dataset
+df=pd.DataFrame({
+    'X':[10,20,30,40,50],
+    'Y':[12,24,33,45,60]
+})
+#Spearman correlation coefficient and p-value
+corr_value, p_value=spearmanr(df['X'],df['Y'])
+print(f"Spearman Correlation Coefficient: {corr_value}")
+print(f"P-value: {p_value}")
+#do same 3ubjects marks for 5 students
+import pandas as pd
+from scipy.stats import spearmanr
+# Marks of 5 students in 3 subjects
+df = pd.DataFrame({
+    'DS': [80, 70, 90, 60, 75],
+    'QC': [85, 72, 88, 65, 78],
+    'TOC': [82, 75, 91, 62, 80]
+})
+# Spearman correlation between subjects
+corr_matrix = df.corr(method='spearman')
+print("Spearman Correlation Matrix:\n",corr_matrix)
+# and do for dataset also
+import pandas as pd
+df = pd.read_csv("Iris.csv")
+print(df.corr(method='spearman', numeric_only=float))
+
+#Hamming distance
+def hamming_distance(str1,str2):
+    #Ensure strings are of equal length
+    if len(str1) != len(str2):
+        raise ValueError("Strings must be of equal length")
+    #Count differing positions
+    return sum(ch1 != ch2 for ch1,ch2 in zip(str1, str2))
+#Example usage
+s1="karolin"
+s2="kathrin"
+dist=hamming_distance(s1,s2)
+print(f"Hamming Distance between '{s1}' and '{s2}': {dist}")
+#Example on a sentence
+s1 = "data science is fun"
+s2 = "data science is run"
+dist = hamming_distance(s1, s2)
+print(f"Hamming Distance between '{s1}' and '{s2}': {dist}")
+#jaccard_index
+def jaccard_index(str1,str2):
+    set1,set2=set(str1.split()),set(str2.split())
+    intersection=set1.intersection(set2)
+    union=set1.union(set2)
+    return len(intersection)/len(union)
+#Example usage
+s1="data science is fun"
+s2="science makes data useful"
+print("jaccard_index:",jaccard_index(s1,s2))
+
+def lcs_length(X,Y):
+    m,n=len(X),len(Y)
+    #Create a matrix to store lengths of LCS
+    dp=[[0]*(n+1) for _ in range(m+1)]
+    #Build the matrix
+    for i in range(m):
+        for j in range(n):
+            if X[i]==Y[j]:
+                dp[i+1][j+1]=dp[i][j]+1
+            else:
+                dp[i+1][j+1]=max(dp[i][j+1],dp[i+1][j])
+    return dp[m][n]
+#Example usage
+seq1="ABCDEF"
+seq2="AEBDF"
+length=lcs_length(seq1,seq2)
+print(f"Longest Common Subsequence length between '{seq1}' and '{seq2}' : {length}")
